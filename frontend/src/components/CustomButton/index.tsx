@@ -3,11 +3,12 @@ import styles from './styles.module.css'
 import logo from '../../assets/logo.png'
 import { CustomButtonProps } from './model';
 
-function CustomButton({outline, ...rest}: CustomButtonProps) {
+function CustomButton({outline, className, ...rest}: CustomButtonProps) {
     return (
         <button className={`
             ${styles.customButton} 
-            ${outline ? styles.textOutline : styles.textDefault}
+            ${outline ? styles.textOutline : styles.textDefault} 
+            ${className}
         `} {...rest}/>
     )
 }

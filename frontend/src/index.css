@@ -1,5 +1,10 @@
 * {
   font-family: 'Roboto', sans-serif;
+  
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+
 }
 
 .html,
@@ -11,6 +16,14 @@ body {
   padding: 0;
   color: var(--fontColor);
   background-color: var(--secondaryDark);
+}
+
+input {
+  color: var(--text);
+}
+
+input:placeholder {
+  color: var(--placeholder);
 }
 
 a, button {

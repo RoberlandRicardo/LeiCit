@@ -4,13 +4,11 @@
 }
 
 .searchBar {
-    width: calc(100% - 34px);
+    width: 100%;
     padding-inline: 16px;
     padding-block: 12px;
-    color: var(--text);
     font-size: 20px;
     background-color: var(--card);
-    border: 0px;
 }
 
 .searchBar:focus {

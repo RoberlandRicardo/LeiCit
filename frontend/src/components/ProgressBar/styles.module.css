@@ -1,0 +1,32 @@
+
+.progressBar {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+}
+
+.itemProgressBar {
+    width: 100%;
+    min-height: 5px;
+    
+}
+
+.itemProgressBar:first-of-type {
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.itemProgressBar:last-of-type {
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+
+.active{
+    background-color: var(--secondary);
+    
+}
+
+.inactive{
+    background-color: #e0e0e0;
+}
