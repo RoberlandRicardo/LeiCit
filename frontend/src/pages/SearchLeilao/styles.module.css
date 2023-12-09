@@ -1,0 +1,26 @@
+
+.searchLeilao {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-inline: 8%;
+}
+
+.title {
+    color: var(--background);
+    font-size: 34px;
+    margin: 0;
+    margin-top: 50px;
+}
+
+.searchBar {
+    width: 100%;
+}
+
+.contentLeilaos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    
+}

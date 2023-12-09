@@ -1,0 +1,22 @@
+
+.containerInput {
+    
+}
+
+.searchBar {
+    width: calc(100% - 34px);
+    padding-inline: 16px;
+    padding-block: 12px;
+    color: var(--text);
+    font-size: 20px;
+    background-color: var(--card);
+    border: 0px;
+}
+
+.searchBar:focus {
+    outline: none;
+}
+
+.searchBar:placeholder-shown{
+    font-style:italic;
+}

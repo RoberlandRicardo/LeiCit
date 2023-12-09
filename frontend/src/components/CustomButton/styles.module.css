@@ -1,0 +1,19 @@
+
+.customButton {
+    width: 195px;
+    height: 53px;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);;
+}
+
+.textDefault {
+    color: var(--text);
+    background-color: var(--primary);
+}
+
+.textOutline {
+    color: var(--background);
+    background-color: transparent;
+    border: 5px solid var(--primary);
+}

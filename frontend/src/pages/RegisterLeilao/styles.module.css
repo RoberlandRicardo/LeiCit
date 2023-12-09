@@ -1,0 +1,31 @@
+
+.registerLeilao {
+    padding-inline: 8%;
+}
+
+.title {
+    color: var(--background);
+    font-size: 34px;
+    margin: 0;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.formLeilao {
+    padding: 18px 18px;
+    width: 39%;
+    background-color: var(--card);
+}
+
+.containerTitle {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    
+}
+
+.titleLabel {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}

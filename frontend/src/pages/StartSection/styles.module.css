@@ -1,0 +1,36 @@
+
+.startSection {
+    display: grid;
+    padding-top: 40px;
+    grid-template-columns: 8fr 7fr;
+}
+
+.textContainer {
+    margin-left: 76px;
+}
+
+.titleWelcome {
+    color: var(--background);
+    font-size: 60px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.subTitleWelcome {
+    color: var(--background);
+    font-size: 26px;
+    font-weight: normal;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hammer {
+    margin-left: 30px;
+    width:80%;
+    vertical-align: middle;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
