@@ -3,6 +3,7 @@
     display: grid;
     padding-top: 40px;
     grid-template-columns: 8fr 7fr;
+    background-color: var(--secondary);
 }
 
 .textContainer {

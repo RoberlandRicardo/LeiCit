@@ -1,10 +1,9 @@
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import TopBar from '../../components/TopBar';
 import RegisterLeilao from '../RegisterLeilao';
 import SearchLeilao from '../SearchLeilao';
 import StartSection from '../StartSection';
-import styles from './styles.module.css';
 
 function WelcomePage() {
 
