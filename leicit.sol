@@ -73,6 +73,7 @@ contract LeiCit {
     function doBid(uint256 _value) external auctionInProgress {
         require(msg.sender != auctionOwner, "The auction owner can not bid");
         require(block.timestamp < roundStartTime + durationBetweenRounds, "The current round has expired");
+        require(currentRound == 1, "Only the first round is open for bidding");
 
         roundBids[currentRound].push(bid({
             enterprise: msg.sender,
