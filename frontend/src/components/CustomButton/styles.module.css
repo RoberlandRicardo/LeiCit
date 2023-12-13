@@ -8,6 +8,11 @@
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);;
 }
 
+.disabled {
+    color: var(--disabled);
+    background-color: var(--grey400);
+}
+
 .textDefault {
     color: var(--text);
     background-color: var(--primary);

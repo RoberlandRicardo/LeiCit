@@ -6,10 +6,11 @@ import TextArea from '../../components/TextArea';
 import CustomButton from '../../components/CustomButton';
 import ProgressBar from '../../components/ProgressBar';
 import useRegisterLeilaoViewModel from './view.model';
+import TopBar from '../../components/TopBar';
 
-function RegisterLeilao({innerRef, ...rest}: RegisterLeilaoProps ) {
+function RegisterLeilao({...rest}: RegisterLeilaoProps ) {
 
-    const {indexRegister, setIndexRegister, newLeilao, setNewLeilao, registerLeilao} = useRegisterLeilaoViewModel({innerRef, ...rest});
+    const {indexRegister, setIndexRegister, newLeilao, setNewLeilao, registerLeilao} = useRegisterLeilaoViewModel({...rest});
 
     function renderFirstRegister() {
         return (
@@ -110,14 +111,17 @@ function RegisterLeilao({innerRef, ...rest}: RegisterLeilaoProps ) {
     }
 
     return (
-        <section className={styles.registerLeilao} ref={innerRef} {...rest}>
-            <h3 className={styles.title}>Cadastrar um novo leilão</h3>
-            <form className={styles.formLeilao}>
-                {
-                    indexRegister == 0 ? renderFirstRegister() : renderSecondaryRegister()
-                }
-            </form>
-        </section>
+        <main>
+            <TopBar />
+            <section className={styles.registerLeilao} {...rest}>
+                <h3 className={styles.title}>Cadastrar um novo leilão</h3>
+                <form className={styles.formLeilao}>
+                    {
+                        indexRegister == 0 ? renderFirstRegister() : renderSecondaryRegister()
+                    }
+                </form>
+            </section>
+        </main>
     )
 }
 

@@ -1,8 +1,12 @@
 import CustomButton from '../../components/CustomButton';
 import foxWallet from '../../assets/fox_wallet.png';
 import styles from './styles.module.css';
+import useRequestPageViewModel from './view.model';
 
 function RequestPage() {
+
+    const { waitingRequest, searchWallet } = useRequestPageViewModel({});
+
     return (
         <main className={styles.requestPage}>
             <div className={styles.card} >
@@ -14,7 +18,10 @@ function RequestPage() {
                         instalado e logue em sua carteira.</h3>
                     <img src={foxWallet} className={styles.imageFox} />
                 </div>
-                <CustomButton style={{
+                <CustomButton 
+                onClick={() => searchWallet()}
+                disabled={waitingRequest}
+                style={{
                     width: '50%',
                     height: 40,
                     minWidth: 130,

@@ -2,20 +2,19 @@ import React, { useEffect } from 'react';
 import styles from './styles.module.css'
 import logo from '../../assets/logo.png'
 import { TopBarProps } from './model';
+import { useNavigate } from 'react-router-dom';
 
 function TopBar({
-    startSectionRef,
-    searchLeilaoRef,
-    registerLeilaoRef
 }: TopBarProps) {
 
+    const navigate = useNavigate();
 
     return (
-        <header>
+        <header className={styles.topBar}>
             <img className={styles.logo} src={logo} />
             <div>
-                <a onClick={() => searchLeilaoRef.current.scrollIntoView()}>Leilões Abertos</a>
-                <a onClick={() => registerLeilaoRef.current.scrollIntoView()}>Novo Leilão</a>
+                <a onClick={() => navigate("/search")}>Leilões Abertos</a>
+                <a onClick={() => navigate("/register")}>Novo Leilão</a>
                 <a onClick={() => console.log("Teste")}>CIToken</a>
                 <a onClick={() => console.log("Teste")}>Sobre</a>
             </div>

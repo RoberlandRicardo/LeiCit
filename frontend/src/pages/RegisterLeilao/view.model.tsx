@@ -49,7 +49,7 @@ const useRegisterLeilaoViewModel = ({}: RegisterLeilaoProps) => {
                 gas: gas.toString(),
                 gasPrice: (await web3.eth.getGasPrice()).toString(),
             });
-            console.log('Contract deployed at address: ' + tx.options.address);
+            
 
         } catch (error) {
             console.error(error);
