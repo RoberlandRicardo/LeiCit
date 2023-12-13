@@ -56,7 +56,7 @@ contract LeiCit {
         uint256 _auctionDuration, 
         uint256 _durationBetweenRounds,
         uint256 _numberOfRounds
-    ) {
+    ) payable {
         auctionOwner = msg.sender;
         auctionDuration = _auctionDuration; 
         durationBetweenRounds = _durationBetweenRounds;
@@ -72,7 +72,8 @@ contract LeiCit {
     //função para o lance
     function doBid(uint256 _value) external auctionInProgress {
         require(msg.sender != auctionOwner, "The auction owner can not bid");
-        require(block.timestamp < roundStartTime + durationBetweenRounds, "The current round has expired");
+        // require(block.timestamp < roundStartTime + durationBetweenRounds, "The current round has expired");
+        // require(currentRound == 1, "Only the first round is open for bidding");
 
         roundBids[currentRound].push(bid({
             enterprise: msg.sender,
@@ -83,7 +84,7 @@ contract LeiCit {
     }
 
     //função para encerrar a rodada
-    function endRound() external auctionInProgress {
+    function endRound() external onlyOwner auctionInProgress {
         require(block.timestamp >= roundStartTime + durationBetweenRounds, "It is not time to end the round yet");
 
         bid memory lowestBid; 
