@@ -12,6 +12,9 @@ contract LeiCit {
     string public itemDescription;
     string public buyerName;
 
+    //mapeamento para armazenar o endereço da empresa que fez os deploys
+    mapping(address => address[]) public deployedContracts;
+
     //estado do leilão
     enum auctionState { inProgress, finished }
     auctionState public currentState;
@@ -34,6 +37,17 @@ contract LeiCit {
     event bestValue(uint256 value, uint256 round);
     event auctionFinished(address enterprise, uint256 value);
     event confirmBidRequest(address indexed enterprise, uint256 value);
+    
+    event AuctionData(
+        uint256 auctionDuration,
+        uint256 durationBetweenRounds,
+        uint256 numberOfRounds,
+        string currentState,
+        uint256 currentRound,
+        uint256 roundStartTime,
+        uint256 bestRoundValue,
+        address enterpriseRoundWinning
+    );
 
     //mapeamento para armazenar as respostas das empresas
     mapping(address => bool) public bidConfirmations;
@@ -56,7 +70,7 @@ contract LeiCit {
         uint256 _auctionDuration, 
         uint256 _durationBetweenRounds,
         uint256 _numberOfRounds
-    ) payable {
+    ) {
         auctionOwner = msg.sender;
         auctionDuration = _auctionDuration; 
         durationBetweenRounds = _durationBetweenRounds;
@@ -67,6 +81,16 @@ contract LeiCit {
         itemName = _itemName;
         buyerName = _buyerName;
         itemDescription = _itemDescription;
+        deployedContracts[msg.sender].push(address(this));
+    }
+
+    // Função auxiliar para converter enum auctionState para string
+    function auctionStateToString(auctionState _state) internal pure returns (string memory) {
+        if(_state == auctionState.inProgress) {
+            return "inProgress";
+        }
+
+        return "finished";
     }
 
     //função para o lance
@@ -81,6 +105,7 @@ contract LeiCit {
         }));
 
         emit newBid(msg.sender, _value, currentRound);
+        emit AuctionData(auctionDuration, durationBetweenRounds, numberOfRounds, auctionStateToString(currentState), currentRound, roundStartTime, bestRoundValue, enterpriseRoundWinning);
     }
 
     //função para encerrar a rodada
