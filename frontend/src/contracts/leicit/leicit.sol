@@ -175,10 +175,10 @@ contract LeiCit {
     // Definir a função getAuctionData
     function getAuctionData() public view returns (string memory) {
         // Criar um array de tokens com o tamanho suficiente para armazenar os dados
-        Token[] memory tokens = new Token;
+        Token[] memory tokens = new Token; // Aumentar o tamanho do array para 14
 
         // Preencher o array de tokens com os dados
-        tokens[0] = Token(uint8(jsmnType.OBJECT), 0, 0, 6); // Objeto JSON com 6 pares chave-valor
+        tokens[0] = Token(uint8(jsmnType.OBJECT), 0, 0, 7); // Objeto JSON com 7 pares chave-valor
         tokens[1] = Token(uint8(jsmnType.STRING), 1, 13, 0); // Chave "currentState"
         tokens[2] = Token(uint8(jsmnType.STRING), 16, uint(uint8(currentState) + 48), 0); // Valor do currentState como string
         tokens[3] = Token(uint8(jsmnType.STRING), 19, 31, 0); // Chave "currentRound"
@@ -187,10 +187,12 @@ contract LeiCit {
         tokens[6] = Token(uint8(jsmnType.STRING), 54, uint(uint8(bestRoundValue) + 48), 0); // Valor do bestRoundValue como string
         tokens[7] = Token(uint8(jsmnType.STRING), 57, 65, 0); // Chave "itemName"
         tokens[8] = Token(uint8(jsmnType.STRING), 68, 68 + bytes(itemName).length, 0); // Valor do itemName como string
-        tokens[9] = Token(uint8(jsmnType.STRING), 71 + bytes(itemName).length, 86 + bytes(itemName).length, 0); // Chave "auctionDuration"
-        tokens[10] = Token(uint8(jsmnType.STRING), 89 + bytes(itemName).length, uint(uint8(auctionDuration) + 48), 0); // Valor do auctionDuration como string
-        tokens[11] = Token(uint8(jsmnType.STRING), 92 + bytes(itemName).length, 111 + bytes(itemName).length, 0); // Chave "durationBetweenRounds"
-        tokens[12] = Token(uint8(jsmnType.STRING), 114 + bytes(itemName).length, uint(uint8(durationBetweenRounds) + 48), 0); // Valor do durationBetweenRounds como string
+        tokens[9] = Token(uint8(jsmnType.STRING), 71 + bytes(itemName).length, 86 + bytes(itemName).length, 0); // Chave "itemDescription"
+        tokens[10] = Token(uint8(jsmnType.STRING), 89 + bytes(itemName).length, 89 + bytes(itemName).length + bytes(itemDescription).length, 0); // Valor do itemDescription como string
+        tokens[11] = Token(uint8(jsmnType.STRING), 92 + bytes(itemName).length + bytes(itemDescription).length, 107 + bytes(itemName).length + bytes(itemDescription).length, 0); // Chave "auctionDuration"
+        tokens[12] = Token(uint8(jsmnType.STRING), 110 + bytes(itemName).length + bytes(itemDescription).length, uint(uint8(auctionDuration) + 48), 0); // Valor do auctionDuration como string
+        tokens[13] = Token(uint8(jsmnType.STRING), 113 + bytes(itemName).length + bytes(itemDescription).length, 132 + bytes(itemName).length + bytes(itemDescription).length, 0); // Chave "durationBetweenRounds"
+        tokens[14] = Token(uint8(jsmnType.STRING), 135 + bytes(itemName).length + bytes(itemDescription).length, uint(uint8(durationBetweenRounds) + 48), 0); // Valor do durationBetweenRounds como string
 
         // Retornar o array de tokens como uma string JSON usando a função stringify
         return jsmnSol.stringify(tokens);
