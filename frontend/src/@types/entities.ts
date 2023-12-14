@@ -5,4 +5,9 @@ export interface Leilao {
     buyerName: string,
     numberRounds: number,
     durationBetweenRounds: number,
+    dateEnd: Date,
+}
+
+export interface DetailedLeilao extends Leilao {
+    actualRound: number,
 }

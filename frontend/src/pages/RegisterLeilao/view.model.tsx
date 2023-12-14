@@ -5,8 +5,11 @@ import abiContract from '../../contracts/leicit/abi.json';
 import bytecodeContract from '../../contracts/leicit/bytecode.bin';
 import Web3 from "web3";
 import { MainContext } from "../../stores/mainContext";
+import { useNavigate } from "react-router-dom";
 
 const useRegisterLeilaoViewModel = ({}: RegisterLeilaoProps) => {
+
+    const navigate = useNavigate();
 
     const {accounts} = useContext(MainContext);
     const [indexRegister, setIndexRegister] = useState<number>(0);
@@ -16,6 +19,7 @@ const useRegisterLeilaoViewModel = ({}: RegisterLeilaoProps) => {
         description: '',
         durationBetweenRounds: 0,
         numberRounds: 0,
+        dateEnd: new Date
     });
 
     async function registerLeilao() {
@@ -32,7 +36,7 @@ const useRegisterLeilaoViewModel = ({}: RegisterLeilaoProps) => {
                 newLeilao.name,
                 newLeilao.buyerName,
                 newLeilao.description,
-                0,
+                newLeilao.dateEnd.getTime(),
                 newLeilao.durationBetweenRounds,
                 newLeilao.numberRounds,
             ] as unknown as undefined
@@ -50,6 +54,7 @@ const useRegisterLeilaoViewModel = ({}: RegisterLeilaoProps) => {
                 gasPrice: (await web3.eth.getGasPrice()).toString(),
             });
             
+            navigate(`/leilao/${tx.options.address}`);
 
         } catch (error) {
             console.error(error);

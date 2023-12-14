@@ -94,7 +94,7 @@ function RegisterLeilao({...rest}: RegisterLeilaoProps ) {
                                 durationBetweenRounds: parseInt(e.target.value)
                             })
                         }} />
-                    <Input labelName='Data inicio' type='date' placeholder='0' />
+                    <Input labelName='Data limite' type='date' placeholder='0' />
                 </fieldset>
                 <div className={styles.containerButtons}>
                     <CustomButton outline className={`${styles.buttonSubmit} ${styles.buttonReturn}`} onClick={() => setIndexRegister(0)} > 

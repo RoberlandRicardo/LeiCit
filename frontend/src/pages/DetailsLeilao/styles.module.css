@@ -1,5 +1,10 @@
 
 .headerDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
     width: 100%;
     height: 26%;
     background: rgb(117,8,117);
@@ -7,9 +12,110 @@
 }
 
 .name {
+    margin: 0;
+    color: var(--textContrast);
+    font-size: 40px;
+}
 
+.containerAddress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .address {
+    margin: 0;
+    color: var(--textContrast);
+    font-size: 18px;
+}
+
+.iconCopy {
+    margin-left: 6px;
+    color: var(--textContrast);
+    font-size: 24px;
+}
+
+.content {
+    display: flex;
+    gap: 10px;
+    height: 74%;
+    padding: 24px;
+}
+
+.containerCard {
+    display: flex;
+    flex-flow: column;
+    flex-direction: column;
+    gap: 10px;
+    width: 23%;
+    height: 100%;
+}
+
+.cardNewDeal {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px;
+}
+
+.cardBidList {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: column;
+    padding: 24px;
+}
+
+.cardRounds {
+    padding: 24px;
+    height: 100%;
+}
+
+.titleCard {
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+    font-size: 22px;
+    font-weight: 500;
+}
+
+table {
+    border-collapse:separate;
+    border-spacing:0 14px;
     
+}
+
+
+th:first-of-type {
+    width: 70%;
+    height: 16px;
+}
+
+th, td {
+    width: 226px;
+    text-align: end;
+    font-size: 14px;
+}
+
+td {
+    padding-block: 16px;
+}
+
+tr>td:last-of-type {
+    padding-right: 20px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+tr>td:first-of-type {
+    padding-left: 20px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+tr>th:last-of-type {
+    padding-right: 20px;
+}
+
+.itemTable:nth-child(2n + 1) {
+    background-color: var(--background);
 }
