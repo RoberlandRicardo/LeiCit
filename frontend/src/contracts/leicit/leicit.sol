@@ -174,6 +174,8 @@ contract LeiCit {
         uint256,
         string memory,
         string memory,
+        string memory,
+        uint256,
         uint256,
         uint256
     ) {
@@ -181,11 +183,25 @@ contract LeiCit {
             currentState,
             currentRound,
             bestRoundValue,
+            buyerName,
             itemName,
             itemDescription,
             auctionDuration,
+            numberOfRounds,
             durationBetweenRounds
         );
+    }
+
+    function getRoundBids(uint256 round) public view returns (uint256[] memory) {
+        require(round > 0 && round <= numberOfRounds, "Round must be valid");
+
+        uint256[] memory bids = new uint256[](roundBids[round].length);
+        
+        for (uint256 i = 0; i < bids.length; i++) {
+            bids[i] = roundBids[round][i].value;
+        }
+
+        return bids;
     }
 
     function selfDestruct() external onlyOwner auctionInProgress {
