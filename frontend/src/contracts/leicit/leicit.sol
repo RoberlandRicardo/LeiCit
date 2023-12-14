@@ -2,8 +2,6 @@
 
 pragma solidity ^0.8.0;
 
-import "./JsmnSolLib.sol";
-
 contract LeiCit {
     //detalhes do contrato
     address public auctionOwner;
@@ -125,8 +123,8 @@ contract LeiCit {
     }
 
     //função para confirmar a empresa que venceu o leiCit
-    function confirmWinner() external onlyOwner auctionInProgress {
-        require(currentRound == numberOfRounds, "Confirmation can only be done after the final round");
+    function confirmWinner() external onlyOwner {
+        require(currentState == auctionState.finished, "Confirmation can only be done after the final round");
 
         address winningEnterprise = enterpriseRoundWinning;
 
@@ -134,7 +132,6 @@ contract LeiCit {
         bool accepted = confirmBid(winningEnterprise, bestRoundValue);
 
         if (accepted) {
-            currentState = auctionState.finished;
             emit auctionFinished(winningEnterprise, bestRoundValue);
         } else {
             for (uint256 i = 1; i < numberOfRounds; i++) {
@@ -144,7 +141,6 @@ contract LeiCit {
                 accepted = confirmBid(nextEnterprise, nextBidValue);
 
                 if (accepted) {
-                    currentState = auctionState.finished;
                     emit auctionFinished(nextEnterprise, nextBidValue);
                     break;
                 }
@@ -166,36 +162,30 @@ contract LeiCit {
     // Função para as empresas responderem ao pedido de confirmação
     function respondToConfirmBid(bool response) external {
         require(msg.sender != auctionOwner, "Auction owner cannot respond");
-        require(currentState == auctionState.inProgress, "Auction must be in progress");
+        require(currentState == auctionState.finished, "Auction must be finished");
 
         // Armazenar a resposta da empresa no mapeamento
         bidConfirmations[msg.sender] = response;
     }
 
-    // Definir a função getAuctionData
-    function getAuctionData() public view returns (string memory) {
-        // Criar um array de tokens com o tamanho suficiente para armazenar os dados
-        Token[] memory tokens = new Token; // Aumentar o tamanho do array para 14
-
-        // Preencher o array de tokens com os dados
-        tokens[0] = Token(uint8(jsmnType.OBJECT), 0, 0, 7); // Objeto JSON com 7 pares chave-valor
-        tokens[1] = Token(uint8(jsmnType.STRING), 1, 13, 0); // Chave "currentState"
-        tokens[2] = Token(uint8(jsmnType.STRING), 16, uint(uint8(currentState) + 48), 0); // Valor do currentState como string
-        tokens[3] = Token(uint8(jsmnType.STRING), 19, 31, 0); // Chave "currentRound"
-        tokens[4] = Token(uint8(jsmnType.STRING), 34, uint(uint8(currentRound) + 48), 0); // Valor do currentRound como string
-        tokens[5] = Token(uint8(jsmnType.STRING), 37, 51, 0); // Chave "bestRoundValue"
-        tokens[6] = Token(uint8(jsmnType.STRING), 54, uint(uint8(bestRoundValue) + 48), 0); // Valor do bestRoundValue como string
-        tokens[7] = Token(uint8(jsmnType.STRING), 57, 65, 0); // Chave "itemName"
-        tokens[8] = Token(uint8(jsmnType.STRING), 68, 68 + bytes(itemName).length, 0); // Valor do itemName como string
-        tokens[9] = Token(uint8(jsmnType.STRING), 71 + bytes(itemName).length, 86 + bytes(itemName).length, 0); // Chave "itemDescription"
-        tokens[10] = Token(uint8(jsmnType.STRING), 89 + bytes(itemName).length, 89 + bytes(itemName).length + bytes(itemDescription).length, 0); // Valor do itemDescription como string
-        tokens[11] = Token(uint8(jsmnType.STRING), 92 + bytes(itemName).length + bytes(itemDescription).length, 107 + bytes(itemName).length + bytes(itemDescription).length, 0); // Chave "auctionDuration"
-        tokens[12] = Token(uint8(jsmnType.STRING), 110 + bytes(itemName).length + bytes(itemDescription).length, uint(uint8(auctionDuration) + 48), 0); // Valor do auctionDuration como string
-        tokens[13] = Token(uint8(jsmnType.STRING), 113 + bytes(itemName).length + bytes(itemDescription).length, 132 + bytes(itemName).length + bytes(itemDescription).length, 0); // Chave "durationBetweenRounds"
-        tokens[14] = Token(uint8(jsmnType.STRING), 135 + bytes(itemName).length + bytes(itemDescription).length, uint(uint8(durationBetweenRounds) + 48), 0); // Valor do durationBetweenRounds como string
-
-        // Retornar o array de tokens como uma string JSON usando a função stringify
-        return jsmnSol.stringify(tokens);
+    function getAuctionData() public view returns (
+        auctionState,
+        uint256,
+        uint256,
+        string memory,
+        string memory,
+        uint256,
+        uint256
+    ) {
+        return (
+            currentState,
+            currentRound,
+            bestRoundValue,
+            itemName,
+            itemDescription,
+            auctionDuration,
+            durationBetweenRounds
+        );
     }
 
     function selfDestruct() external onlyOwner auctionInProgress {

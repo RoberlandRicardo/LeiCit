@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.0;
 
 contract LeiCit {
     //detalhes do contrato
@@ -123,8 +123,8 @@ contract LeiCit {
     }
 
     //função para confirmar a empresa que venceu o leiCit
-    function confirmWinner() external onlyOwner auctionInProgress {
-        require(currentRound == numberOfRounds, "Confirmation can only be done after the final round");
+    function confirmWinner() external onlyOwner {
+        require(currentState == auctionState.finished, "Confirmation can only be done after the final round");
 
         address winningEnterprise = enterpriseRoundWinning;
 
@@ -132,7 +132,6 @@ contract LeiCit {
         bool accepted = confirmBid(winningEnterprise, bestRoundValue);
 
         if (accepted) {
-            currentState = auctionState.finished;
             emit auctionFinished(winningEnterprise, bestRoundValue);
         } else {
             for (uint256 i = 1; i < numberOfRounds; i++) {
@@ -142,7 +141,6 @@ contract LeiCit {
                 accepted = confirmBid(nextEnterprise, nextBidValue);
 
                 if (accepted) {
-                    currentState = auctionState.finished;
                     emit auctionFinished(nextEnterprise, nextBidValue);
                     break;
                 }
@@ -164,7 +162,7 @@ contract LeiCit {
     // Função para as empresas responderem ao pedido de confirmação
     function respondToConfirmBid(bool response) external {
         require(msg.sender != auctionOwner, "Auction owner cannot respond");
-        require(currentState == auctionState.inProgress, "Auction must be in progress");
+        require(currentState == auctionState.finished, "Auction must be finished");
 
         // Armazenar a resposta da empresa no mapeamento
         bidConfirmations[msg.sender] = response;
@@ -175,7 +173,7 @@ contract LeiCit {
         uint256,
         uint256,
         string memory,
-        uint256,
+        string memory,
         uint256,
         uint256
     ) {
@@ -184,9 +182,9 @@ contract LeiCit {
             currentRound,
             bestRoundValue,
             itemName,
+            itemDescription,
             auctionDuration,
-            durationBetweenRounds,
-            block.timestamp
+            durationBetweenRounds
         );
     }
 
