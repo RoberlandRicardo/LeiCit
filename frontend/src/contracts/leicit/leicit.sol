@@ -37,17 +37,6 @@ contract LeiCit {
     event bestValue(uint256 value, uint256 round);
     event auctionFinished(address enterprise, uint256 value);
     event confirmBidRequest(address indexed enterprise, uint256 value);
-    
-    event AuctionData(
-        uint256 auctionDuration,
-        uint256 durationBetweenRounds,
-        uint256 numberOfRounds,
-        string currentState,
-        uint256 currentRound,
-        uint256 roundStartTime,
-        uint256 bestRoundValue,
-        address enterpriseRoundWinning
-    );
 
     //mapeamento para armazenar as respostas das empresas
     mapping(address => bool) public bidConfirmations;
@@ -105,7 +94,6 @@ contract LeiCit {
         }));
 
         emit newBid(msg.sender, _value, currentRound);
-        emit AuctionData(auctionDuration, durationBetweenRounds, numberOfRounds, auctionStateToString(currentState), currentRound, roundStartTime, bestRoundValue, enterpriseRoundWinning);
     }
 
     //função para encerrar a rodada
@@ -180,6 +168,26 @@ contract LeiCit {
 
         // Armazenar a resposta da empresa no mapeamento
         bidConfirmations[msg.sender] = response;
+    }
+
+    function getAuctionData() public view returns (
+        auctionState,
+        uint256,
+        uint256,
+        string memory,
+        uint256,
+        uint256,
+        uint256
+    ) {
+        return (
+            currentState,
+            currentRound,
+            bestRoundValue,
+            itemName,
+            auctionDuration,
+            durationBetweenRounds,
+            block.timestamp
+        );
     }
 
     function selfDestruct() external onlyOwner auctionInProgress {
