@@ -14,6 +14,8 @@ const useDetailsLeilaoViewModel = ({}) => {
 
     const loadedContract = new web3Instance.eth.Contract(abiContract, address);
 
+    loadedContract.events.newBid().on('data', (e) => console.log(e))
+
     const mockLeilao: DetailedLeilao = {
         name: "Carregando...",
         buyerName: "",
